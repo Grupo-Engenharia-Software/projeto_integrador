@@ -9,7 +9,7 @@ Python
 # Front-end
 HTML, CSS e JavaScript
  
-|# Banco de Dados
+# Banco de Dados
 PostgreSQL
  
 # Documentação
