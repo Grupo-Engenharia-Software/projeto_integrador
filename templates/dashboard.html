@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Área Logada</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <main class="loginContainer">
+        <div class="loginCard" style="aspect-ratio: unset;">
+            <h1 class="loginTitulo">Bem-vindo!</h1>
+            <p class="loginSubtitulo">Você está logado como {{ email }}</p>
+            <a href="{{ url_for('logout') }}" class="btn-submit" style="display: block; text-align: center; text-decoration: none;">
+                Sair
+            </a>
+        </div>
+    </main>
+</body>
+</html>

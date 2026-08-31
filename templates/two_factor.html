@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificação em Duas Etapas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <main class="loginContainer">
+    <form class="loginCard" method="POST" action="{{ url_for('verificar_2fa') }}" novalidate>
+      <h1 class="loginTitulo">Verificação</h1>
+      <p class="loginSubtitulo">
+        Digite o código de 6 dígitos enviado para o seu e-mail
+      </p>
+
+      <div class="formGroup">
+        <label for="codigo">Código de verificação</label>
+        <input
+          type="text"
+          id="codigo"
+          name="codigo"
+          placeholder="000000"
+          maxlength="6"
+          inputmode="numeric"
+          autocomplete="one-time-code"
+          required
+        >
+      </div>
+
+      {% if mensagem %}
+        <div class="form-message {{ 'success' if sucesso else '' }}" role="alert">
+          {{ mensagem }}
+        </div>
+      {% endif %}
+
+      <button type="submit" class="btn-submit">Verificar</button>
+
+      <p class="signup-link">
+        <a href="{{ url_for('login') }}">Cancelar e voltar ao login</a>
+      </p>
+    </form>
+  </main>
+</body>
+</html>
