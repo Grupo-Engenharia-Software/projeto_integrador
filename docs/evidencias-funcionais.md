@@ -5,63 +5,94 @@ devem ser capturadas para comprovar o funcionamento de cada requisito
 do checklist, conforme exigido pelo item **"Testes via Front-end"**
 das diretrizes de entrega.
 
-> ⚠️ As imagens abaixo precisam ser capturadas por vocês, testando o
-> sistema rodando de verdade, e salvas na pasta `docs/evidencias/`.
-> Depois de capturar, adicione os links das imagens neste arquivo no
-> lugar dos itens `[ ]`.
-
-## Como organizar
-
-Crie a pasta `docs/evidencias/` e salve os prints com nomes claros,
-por exemplo:
-
-```
-docs/evidencias/
- ├── 01-cadastro-usuario.png
- ├── 02-login-sucesso.png
- ├── 03-2fa-email-recebido.png
- ├── 04-2fa-codigo-verificado.png
- ├── 05-login-credenciais-invalidas.png
- ├── 06-sessao-expirada.png
- ├── 07-logout.png
- ├── 08-rate-limit-bloqueio.png
- └── 09-banco-hash-salt.png
-```
-
 ## Checklist de evidências
 
-- [ ] **Cadastro de usuário** — tela de registro preenchida e
-      confirmação de sucesso.
-- [ ] **Banco de dados** — print da tabela `usuarios` (via pgAdmin ou
-      terminal do PostgreSQL) mostrando que a senha está salva como
+### Etapa 1 — Autenticação e Gestão de Credenciais
+
+- [x] **Cadastro de usuário** — tela de registro preenchida.
+
+      ![Cadastro de usuário](evidencias/01 - Tela de cadastro preenchida.png)
+
+- [x] **Banco de dados** — print da tabela `usuarios` mostrando que a senha está salva como
       hash + salt, nunca em texto puro. *(Requisitos 1.1 a 1.4)*
-- [ ] **Login com credenciais corretas** — tela de login preenchida e
+
+      ![Banco de dados](evidencias/02 - Tabela usuarios no banco.png)
+
+- [x] **Login com credenciais corretas** — tela de login preenchida e
       redirecionamento para a verificação de 2FA.
-- [ ] **E-mail com o código de 2FA recebido** — print da caixa de
+
+      ![Login com credenciais corretas](evidencias/03 - Login com e-mailsenha corretos.png)
+
+- [x] **E-mail com o código de 2FA recebido** — print da caixa de
       entrada mostrando o e-mail chegando com o código de 6 dígitos.
       *(Requisito 1.5)*
-- [ ] **Verificação do código de 2FA com sucesso** — tela digitando o
+
+      ![E-mail com o código de 2FA recebido](evidencias/04 - E-mail recebido na caixa de entrada com o código de 6 dígitos.png)
+
+- [x] **Verificação do código de 2FA com sucesso** — tela digitando o
       código e sendo redirecionado ao dashboard. *(Requisito 1.6)*
-- [ ] **Tentativa com código de 2FA incorreto** — mensagem de erro
+
+      ![Verificação do código de 2FA com sucesso](evidencias/05 - Digitando o código certo.png)
+
+- [x] **Tentativa com código de 2FA incorreto** — mensagem de erro
       "Código incorreto". *(Requisito 1.6)*
-- [ ] **Login com credenciais inválidas** — mensagem de erro
+
+      ![Tentativa com código de 2FA incorreto](evidencias/06 - Digitando o código errado.png)
+
+- [x] **Login com credenciais inválidas** — mensagem de erro
       "Credenciais inválidas".
-- [ ] **Sessão ativa** — acesso ao `/dashboard` mostrando o e-mail do
+
+      ![Login com credenciais inválidas](evidencias/07 - Login com e-mailsenha inválidos.png)
+
+- [x] **Sessão ativa** — acesso ao `/dashboard` mostrando o e-mail do
       usuário logado.
-- [ ] **Logout** — botão "Sair" sendo clicado e redirecionamento de
-      volta ao login, com o `/dashboard` bloqueado em seguida.
-      *(Requisito 1.10)*
-- [ ] **Expiração de sessão** — acessar `/dashboard` depois de mais de
-      15 minutos sem uso e ser redirecionado ao login automaticamente.
-      *(Requisito 1.9)*
-- [ ] **Bloqueio por força bruta** — errar a senha 5 vezes seguidas e
+
+      ![Sessão ativa](evidencias/08 - Tela do dashboard mostrando o e-mail do usuário logado.png)
+
+- [x] **Bloqueio por força bruta** — errar a senha 5 vezes seguidas e
       receber a mensagem de bloqueio temporário na 6ª tentativa.
       *(Requisito 1.11)*
 
-## Sugestão de vídeo (opcional, mas recomendado)
+      ![Bloqueio por força bruta](evidencias/09 - Errar a senha 5 vezes seguidas → na 6ª tentativa aparece a mensagem de bloqueio temporário.png)
 
-Além dos prints, é interessante gravar um vídeo curto (2–3 minutos)
-demonstrando o fluxo completo: cadastro → login → recebimento do
-e-mail → digitação do código → acesso ao dashboard → logout. Isso
-facilita a correção e comprova que o sistema funciona de ponta a
-ponta, como pedido nas diretrizes de entrega.
+### Etapa 2 — Recuperação de Senha
+
+- [x] **Solicitação de recuperação** — tela `/esqueci-senha` preenchida
+      e mensagem genérica de confirmação exibida. *(Requisito 2.1)*
+
+      ![Solicitação de recuperação](evidencias/10 - Tela esqueci senha preenchida e confirmação exibida.png)      
+
+- [x] **E-mail de recuperação recebido** — print da caixa de entrada
+      mostrando o link de redefinição. *(Requisitos 2.1, 2.2)*
+
+      ![E-mail de recuperação recebido](evidencias/11 - Token recebido.png) 
+
+- [x] **Redefinição de senha com sucesso** — tela de nova senha
+      preenchida e redirecionamento ao login com mensagem de sucesso.
+      *(Requisitos 2.1, 2.3, 2.4)*
+
+      ![Redefinição de senha com sucesso](evidencias/12 - Tela alteração de senha preenchida.png) 
+      !(evidencias/13 - Mensagem de sucesso na troca de senha.png) 
+
+- [x] **Tentativa de reutilizar o mesmo link** — acessar o mesmo link
+      de recuperação uma segunda vez após já ter sido usado, e receber
+      a mensagem "Este link já foi utilizado". *(Requisito 2.4)*
+
+      ![Tentativa de reutilizar o mesmo link](evidencias/14 - Tentativa de usar o mesmo link.png)
+
+- [x] **Token expirado** — acessar um link de recuperação depois de
+      mais de 30 minutos e receber a mensagem "Este link de
+      recuperação expirou". *(Requisito 2.5)*
+
+      ![Token expirado](evidencias/17 - Link de recuperação expirado.png)
+
+- [x] **Log de eventos** — print do conteúdo do arquivo
+      `logs/eventos.log` mostrando as linhas de `SOLICITACAO_RECUPERACAO`,
+      `REDEFINICAO_SENHA_SUCESSO`
+
+      ![Log de eventos](evidencias/15 - Solicitação recuperação.png)
+      (evidencias/16 - Redefinição senha sucesso.png)
+
+- [x] **Video requesito 2** — Video mostrando o processo de recuperação de senha.
+
+      (evidencias/Requesito 2.mp4)
