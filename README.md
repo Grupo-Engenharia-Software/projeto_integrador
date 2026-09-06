@@ -1,4 +1,7 @@
 # Projeto Integrador
+CampusFlow — Sistema de Gestão de Projetos Acadêmicos
+
+Sistema para organizar e acompanhar projetos acadêmicos, trabalhos em grupo e atividades de alunos, desde a criação até a entrega.
  
 # Arquitetura
 MVC (Model-View-Controller)
