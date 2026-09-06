@@ -90,3 +90,51 @@ código-fonte, qualquer pessoa com acesso ao repositório do GitHub
 Separar essas informações em um arquivo `.env` — que fica fora do
 controle de versão graças ao `.gitignore` — é uma prática padrão de
 segurança em desenvolvimento de software.
+
+## Módulo 2 — Recuperação de Senha
+ 
+## Por que `secrets.token_urlsafe()` e não `random`?
+ 
+O módulo `random` do Python é um gerador **pseudoaleatório**, previsível
+o suficiente para ser reproduzido por um atacante que conheça o
+estado interno do gerador — por isso, nunca deve ser usado para gerar
+tokens de segurança. O módulo `secrets` foi feito especificamente para
+fins criptográficos, usando uma fonte de aleatoriedade do sistema
+operacional. `token_urlsafe(32)` gera um token de 32 bytes (256 bits),
+praticamente impossível de adivinhar por força bruta, e já formatado
+para ser seguro dentro de uma URL.
+ 
+## Por que o token de recuperação expira em 30 minutos (e não 5, como o 2FA)?
+ 
+O token de recuperação de senha depende do usuário abrir o e-mail e
+clicar no link, o que pode levar mais tempo do que digitar um código
+de 6 dígitos que já está na tela. 30 minutos equilibra a comodidade
+(dar tempo real para checar o e-mail) com a segurança (limitar por
+quanto tempo um link interceptado continuaria válido).
+ 
+## Por que o token é invalidado após o primeiro uso?
+ 
+Sem essa proteção, se alguém interceptasse o e-mail (ou o usuário
+reenviasse o link para outra pessoa por engano), o mesmo link poderia
+ser usado repetidamente para redefinir a senha várias vezes. Marcar o
+token como usado garante que cada solicitação de recuperação só possa
+resultar em **uma** troca de senha.
+ 
+## Por que a mensagem de "esqueci senha" é sempre igual, mesmo se o e-mail não existir?
+ 
+Se o sistema respondesse "e-mail não encontrado" para e-mails não
+cadastrados e "link enviado" para e-mails cadastrados, um atacante
+poderia usar esse formulário para descobrir, um por um, quais e-mails
+têm conta no sistema (ataque de enumeração de usuários). Usar sempre a
+mesma mensagem genérica elimina essa forma de vazamento de informação,
+mesmo que nenhum e-mail seja de fato enviado nos casos em que a conta
+não existe.
+ 
+## Por que registrar os eventos em um arquivo de log?
+ 
+Registrar quando uma recuperação de senha foi solicitada e se ela
+terminou em sucesso ou falha cria um rastro auditável, permitindo
+identificar comportamentos suspeitos (por exemplo, muitas solicitações
+de recuperação para o mesmo e-mail em pouco tempo) e serve como
+evidência do funcionamento do fluxo, sem depender apenas de capturas
+de tela feitas na hora do teste.
