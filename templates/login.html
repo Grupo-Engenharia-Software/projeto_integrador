@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tela de Login</title>
+    <title>CampusFlow | Login</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <main class="loginContainer">
     <form class="loginCard" method="POST" action="{{ url_for('login') }}" novalidate>
-      <h1 class="loginTitulo">Login</h1>
+      <h1 class="loginTitulo">CampusFlow</h1>
       <p class="loginSubtitulo">Entre com suas credenciais</p>
 
       <!-- Campo: e-mail -->
@@ -53,6 +53,10 @@
       {% endif %}
 
       <button type="submit" class="btn-submit">Entrar</button>
+
+      <p class="signup-link">
+        <a href="{{ url_for('esqueci_senha') }}">Esqueceu a senha?</a>
+      </p>
 
       <p class="signup-link">
         Não tem uma conta? <a href="{{ url_for('register') }}">Cadastre-se</a>
