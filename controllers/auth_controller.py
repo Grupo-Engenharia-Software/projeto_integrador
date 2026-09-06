@@ -63,7 +63,7 @@ def enviar_email_codigo(email_destino, codigo):
     )
 
     mensagem = MIMEText(corpo_email)
-    mensagem["Subject"] = "Código de verificação - Projeto Integrador"
+    mensagem["Subject"] = "Código de verificação - CampusFlow"
     mensagem["From"] = EMAIL_REMETENTE
     mensagem["To"] = email_destino
 
