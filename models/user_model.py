@@ -60,3 +60,20 @@ def buscar_usuario_por_email(email):
     conexao.close()
 
     return usuario
+
+def atualizar_senha_usuario(id_usuario, senha_hash, salt):
+    
+    # Atualiza o hash e o salt da senha de um usuário existente.
+    # Usado no fluxo de recuperação de senha.
+    
+    conexao = get_connection()
+    cursor = conexao.cursor()
+ 
+    cursor.execute(
+        "UPDATE usuarios SET senha_hash = %s, salt = %s WHERE id = %s",
+        (senha_hash, salt, id_usuario)
+    )
+ 
+    conexao.commit()
+    cursor.close()
+    conexao.close()
